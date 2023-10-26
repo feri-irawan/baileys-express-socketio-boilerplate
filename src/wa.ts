@@ -8,7 +8,7 @@ import makeWASocket, {
 } from "@whiskeysockets/baileys";
 import { io } from "./server";
 import qrcode from "qrcode";
-import * as config from "../wa.config.js";
+import config from "../config";
 
 const sessionName = config.sessionName || "my-session";
 
