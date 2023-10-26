@@ -1,0 +1,27 @@
+{
+  "name": "baileys-express-socketio-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "format": "prettier -w src/*.{ts,html} package.json"
+  },
+  "author": "Feri Irawan <feriirawan.akun@gmail.com> (https://github.com/feri-irawan)",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/qrcode": "^1.5.4",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
