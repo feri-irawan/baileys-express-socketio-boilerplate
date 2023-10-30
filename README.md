@@ -4,25 +4,19 @@ Welcome to the [baileys-express-socketio-boilerplate](https://github.com/feri-ir
 
 This repository combines the technologies of [Baileys](https://github.com/WhiskeySockets/Baileys), [Express](https://github.com/expressjs/express), [Socket.IO](https://github.com/socketio/socket.io), and [TypeScript](https://github.com/microsoft/TypeScript). Baileys is used for interacting with WhatsApp Web, Express for server creation, Socket.IO for real-time communication, and TypeScript for type-based development.
 
-## Usage Instructions
-1. **Installation**
-    ```
-    yarn
-    ```
-
-2. **Running the Application**
-    ```
-    yarn dev
-    ```
+## Usage
+```
+git clone git@github.com:feri-irawan/baileys-express-socketio-boilerplate.git
+yarn dev
+```
 
 ## Configuration
-Make sure to configure the `wa.config.js` file correctly before running the application.
+Make sure to configure the `config.ts` file correctly before running the application.
 
-```javascript
-/** @type {import('wa.config').Config} */
-module.exports = {
+```typescript
+export default {
     sessionName: 'my-session'
-};
+}
 ```
 
 ## Contribution
