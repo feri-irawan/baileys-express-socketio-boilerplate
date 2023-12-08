@@ -9,6 +9,9 @@ import makeWASocket, {
 import { io } from "./server";
 import qrcode from "qrcode";
 import config from "../config";
+import fs from "node:fs/promises";
+import { existsSync } from "fs";
+import path from "path";
 
 const sessionName = config.sessionName || "my-session";
 
@@ -17,7 +20,9 @@ export let status: string = "connecting";
 
 // WhatsApp
 export async function connectToWhatsApp(isReconnecting?: boolean) {
-  const { state, saveCreds } = await useMultiFileAuthState(sessionName);
+  const { state, saveCreds } = await useMultiFileAuthState(
+    `sessions/${sessionName}`
+  );
   sock = isReconnecting
     ? makeWASocket({ auth: state })
     : sock ?? makeWASocket({ auth: state });
@@ -29,7 +34,7 @@ export async function connectToWhatsApp(isReconnecting?: boolean) {
 }
 
 // Hanlde connection WA
-function handleConnection(update: Partial<ConnectionState>) {
+async function handleConnection(update: Partial<ConnectionState>) {
   const { connection, lastDisconnect } = update;
 
   if (connection === "close") {
@@ -50,11 +55,25 @@ function handleConnection(update: Partial<ConnectionState>) {
     if (shouldReconnect) {
       handleStatus("reconnecting");
       connectToWhatsApp(true);
+    } else {
+      sock = null as any;
+      handleStatus("connecting");
+      await removeSessionFolder();
+      connectToWhatsApp();
     }
   } else if (connection === "open") {
     handleStatus(connection);
     console.log("opened connection");
   }
+}
+
+// Remove session folder
+async function removeSessionFolder() {
+  const sessionFolder = path.resolve(sessionName);
+  if (existsSync(sessionFolder)) {
+    await fs.rm(sessionFolder, { recursive: true, force: true });
+  }
+  return;
 }
 
 // Handle status

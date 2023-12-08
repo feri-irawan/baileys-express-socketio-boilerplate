@@ -1,1 +1,4 @@
 node_modules
+sessions/*
+!sessions/README.md
+yarn-error.log
