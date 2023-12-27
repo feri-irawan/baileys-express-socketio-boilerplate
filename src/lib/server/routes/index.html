@@ -4,28 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Home</title>
   </head>
+
   <body>
     <h2 style="text-align: center">Status: <span id="status"></span></h2>
     <img src="" style="margin: 0 auto; display: block" />
+
     <script type="module">
-      import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+      import { io } from 'https://cdn.socket.io/4.4.1/socket.io.esm.min.js'
 
-      const socket = io();
+      const socket = io()
 
-      socket.on("qr", showQR);
-      socket.on("status", showStatus);
+      socket.on('qr', showQR)
+      socket.on('status', showStatus)
 
       function showQR(qr) {
-        console.log("qr: ", qr);
-        const img = document.querySelector("img");
-        img.src = qr;
+        console.log('qr: ', qr)
+        const img = document.querySelector('img')
+        img.src = qr
       }
 
       function showStatus(status) {
-        console.log("status: ", status);
-        document.querySelector("#status").innerHTML = status;
+        console.log('status: ', status)
+        document.querySelector('#status').innerHTML = status
       }
     </script>
   </body>
