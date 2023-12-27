@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon -r tsconfig-paths/register src/index.ts",
+    "dev": "nodemon --config nodemon.json -r tsconfig-paths/register src/index.ts",
     "format": "prettier --config .prettierrc --write 'src/**/*.{ts,html}' package.json"
   },
   "author": "Feri Irawan <feriirawan.akun@gmail.com> (https://github.com/feri-irawan)",
