@@ -99,7 +99,7 @@ async function handleQR({ qr }: { qr?: string }) {
   io.emit('qr', base64)
 }
 
-// Handle semua pesan
+// Handle incoming messages
 async function handleIncomingMessages({
   sock,
   messages,
@@ -127,7 +127,7 @@ export type Command = {
   handler: CommandHandler
 }
 
-/** Handle pesan yang berupa command */
+/** Handle command */
 export async function handleCommand({
   sock,
   message,
@@ -137,10 +137,10 @@ export async function handleCommand({
 }) {
   const { isCommand, command, fromMe } = getMessage(message)
 
-  // Jika bukan command
+  // If message is not command
   if (fromMe || !isCommand) return false
 
-  // Cari command yang sesuai dengan command yang dikirim user dan jalankan handlernya
+  // Search for the command that matches the command that was sent by the user and run the handler
   for (const cmd of commands) {
     if (cmd.name === command || cmd.aliases?.includes(command as string)) {
       await cmd.handler({ sock, message })

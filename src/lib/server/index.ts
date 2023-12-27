@@ -8,6 +8,7 @@ export const app = express()
 export const server = http.createServer(app)
 export const io = new Server(server, { cors: { origin: '*' } })
 
+// Set middleware
 app.use(cors())
 app.use(express.json())
 
@@ -17,6 +18,7 @@ export type Route = {
   handler: RequestHandler
 }
 
+// Set routes
 routes.forEach((route) => {
   switch (route.method) {
     case 'GET':

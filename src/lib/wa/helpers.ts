@@ -1,6 +1,6 @@
 import { WAMessage } from '@whiskeysockets/baileys'
 
-// Mendapatkan property yang sering digunakan
+// Get the frequently used properties
 export function getMessage(m: WAMessage) {
   const { message, key } = m
   const { conversation, extendedTextMessage } = message || {}
