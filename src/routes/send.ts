@@ -1,5 +1,5 @@
+import { Route } from '@/lib/server'
 import { sock, status } from '@/lib/wa'
-import { Route } from '@/routes'
 import { ZodError, z } from 'zod'
 
 const bodySchema = z.object({

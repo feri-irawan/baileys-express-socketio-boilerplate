@@ -112,6 +112,21 @@ async function handleIncomingMessages({
   }
 }
 
+export type CommandHandler = ({
+  sock,
+  message,
+}: {
+  sock: WASocket
+  message: WAMessage
+}) => Promise<void>
+
+export type Command = {
+  name: string
+  description?: string
+  aliases?: string[]
+  handler: CommandHandler
+}
+
 /** Handle pesan yang berupa command */
 export async function handleCommand({
   sock,

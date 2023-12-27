@@ -1,4 +1,4 @@
-import { Route } from '@/routes'
+import { Route } from '@/lib/server'
 
 export const rootRoute: Route = {
   path: '/',
