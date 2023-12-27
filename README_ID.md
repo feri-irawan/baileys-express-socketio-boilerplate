@@ -7,30 +7,97 @@ Selamat datang di repositori [baileys-express-socketio-boilerplate](https://gith
 Repositori ini merupakan proyek yang menggabungkan teknologi [Baileys](https://github.com/WhiskeySockets/Baileys), [Express](https://github.com/expressjs/express), [Socket.IO](https://github.com/socketio/socket.io), dan [TypeScript](https://github.com/microsoft/TypeScript). Baileys digunakan untuk berinteraksi dengan WhatsApp Web, Express untuk pembuatan server, Socket.IO untuk komunikasi real-time, dan TypeScript untuk pengembangan berbasis tipe.
 
 ## Petunjuk Penggunaan
+
 1. **Instalasi**
-    ```
-    yarn
-    ```
+
+   ```
+   git clone git@github.com:feri-irawan/baileys-express-socketio-boilerplate.git
+   yarn
+   ```
 
 2. **Menjalankan Aplikasi**
-    ```
-    yarn dev
-    ```
+   ```
+   yarn dev
+   ```
 
 ## Konfigurasi
-Pastikan untuk mengonfigurasi file `wa.config.js` dengan benar sebelum menjalankan aplikasi.
 
-```javascript
-/** @type {import('wa.config').Config} */
-module.exprots = {
-    sessionName: 'my-session'
-};
+Pastikan untuk mengonfigurasi file `wa.config.ts` dengan benar sebelum menjalankan aplikasi.
+
+```ts
+export default {
+  sessionName: 'my-session',
+}
+```
+
+## Membuat perintah
+
+Buat file command.js di folder `src/commands` dan import di `src/commands/index.ts`, contoh:
+
+```ts
+// src/commands/ping.ts
+import { Command } from '@/lib/wa'
+
+export const pingCommand: Command = {
+  name: 'ping',
+  description: 'Ping!',
+  handler: async ({ sock, message }) => {
+    await sock.sendMessage(message.key.remoteJid!, { text: 'Pong!' })
+  },
+}
+```
+
+```ts
+// src/commands/index.ts
+import { Command } from '@/lib/wa'
+import { pingCommand } from './ping'
+
+export const commands: Command[] = [pingCommand]
+```
+
+## Membuat Route
+
+Buat file route.js di folder `src/routes` dan import di `src/routes/index.ts`, contoh:
+
+```ts
+// src/routes/ping.ts
+import { Route } from '@/lib/server'
+import { sock, status } from '@/lib/wa'
+
+export const pingRoute: Route = {
+  path: '/ping',
+  method: 'GET',
+  handler: async (req, res) => {
+    if (status === 'open') {
+      const [receiver] = await sock.onWhatsApp('123456789') // 123456789 adalah nomor kontak
+
+      if (receiver.exists) {
+        await sock.sendMessage(receiver.jid, { text: 'Pong!' })
+        res.send('Pong!')
+      }
+
+      return
+    }
+
+    res.status(500).send('Server is not open')
+  },
+}
+```
+
+```ts
+// src/routes/index.ts
+import { Route } from '@/lib/wa'
+import { pingRoute } from './ping'
+
+export const routes: Route[] = [pingRoute]
 ```
 
 ## Kontribusi
-Jika Anda ingin berkontribusi pada proyek ini, silakan buat *pull request* dan ikuti panduan kontribusi.
+
+Jika Anda ingin berkontribusi pada proyek ini, silakan buat _pull request_ dan ikuti panduan kontribusi.
 
 ## Lisensi
+
 Proyek ini dilisensikan di bawah lisensi MIT.
 
 Terima kasih, semoga bermanfaat. Jangan ragu untuk melaporkan masalah atau memberikan saran.
