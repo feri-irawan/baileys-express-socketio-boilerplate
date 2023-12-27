@@ -11,7 +11,7 @@ import makeWASocket, {
 import fs from 'fs'
 import path from 'path'
 import qrcode from 'qrcode'
-import config from '../../../config'
+import config from '../../../wa.config'
 import { io } from '../server'
 import { getMessage } from './helpers'
 
