@@ -4,6 +4,7 @@ import makeWASocket, {
   ConnectionState,
   DisconnectReason,
   useMultiFileAuthState,
+  WAConnectionState,
   WAMessage,
   WASocket,
 } from '@whiskeysockets/baileys'
@@ -16,8 +17,10 @@ import { getMessage } from './helpers'
 
 const sessionName = config.sessionName || 'my-session'
 
+type Status = 'reconnecting' | WAConnectionState
+
 export let sock: WASocket
-export let status: string = 'connecting'
+export let status: Status = 'connecting'
 
 // WhatsApp
 export async function connectToWhatsApp(
@@ -83,7 +86,7 @@ async function removeSessionFolder() {
 }
 
 // Handle status
-function handleStatus(connection: string) {
+function handleStatus(connection: Status) {
   status = connection
   io.emit('status', status)
 }
